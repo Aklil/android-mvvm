@@ -13,6 +13,8 @@ class AppDatabase private constructor(){
 
     companion object {
         // volatile: writes to this are immediately visible to other threads
+        //The volatile keyword guarantees visibility of changes to variables across threads
+        // because it is written to and read from the main memory not cpu cache
         @Volatile private var instance: AppDatabase? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this){  // sync and lock threads - enforcing thread safety

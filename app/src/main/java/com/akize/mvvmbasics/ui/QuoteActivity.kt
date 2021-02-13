@@ -26,10 +26,8 @@ class QuoteActivity : AppCompatActivity() {
     }
 
     private fun initUi() {
-        quoteViewModel = ViewModelProvider(this,
-                QuoteViewModelFactory(
-                        this.application
-                )
+        quoteViewModel = ViewModelProvider(this,  // this  A scope that owns ViewModelStore
+                QuoteViewModelFactory(this)
         ).get(QuoteViewModel::class.java)
 
         quoteViewModel.getQuotes().observe(this, Observer{quotes ->
@@ -38,7 +36,7 @@ class QuoteActivity : AppCompatActivity() {
 
             binding.tvQuoteDisplay.text = stringBuilder.toString()
 
-        })  //observe until thusdestoryed: lifecycle aware
+        })  //observe until the owner (this) is destoryed: lifecycle aware
 
         binding.btnAddQuote.setOnClickListener{
             val quote = Quote(binding.etQuote.text.toString(), binding.etAuthor.text.toString())
